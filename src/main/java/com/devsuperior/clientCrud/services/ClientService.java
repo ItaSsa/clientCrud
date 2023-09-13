@@ -12,8 +12,6 @@ import com.devsuperior.clientCrud.dtos.ClientDto;
 import com.devsuperior.clientCrud.entities.Client;
 import com.devsuperior.clientCrud.repositories.ClientRepository;
 
-import jakarta.validation.Valid;
-
 @Component
 public class ClientService {
 	
@@ -39,4 +37,26 @@ public class ClientService {
 		clientRepository.save(entity);
 		return new ClientDto(entity);
 	}
+	
+	
+	@Transactional
+	public ClientDto update(Long id, ClientDto dto) {
+			Client entity = clientRepository.getReferenceById(id);
+			copyDtoToEntity(dto,entity);
+			entity = clientRepository.save(entity);
+			return new ClientDto(entity);
+
+	}
+	
+	
+	private void copyDtoToEntity(ClientDto dto, Client entity) {
+		entity.setName(dto.getName());
+		entity.setBirthDate(dto.getBirthDate());
+		entity.setCpf(dto.getCpf());
+		entity.setIncome(dto.getIncome());
+		entity.setChildren(dto.getChildren());
+		
+	}
+
+	
 }
