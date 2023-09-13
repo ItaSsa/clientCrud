@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.clientCrud.dtos.ClientDto;
 import com.devsuperior.clientCrud.services.ClientService;
+import com.devsuperior.dscommerce.dtos.ProductDto;
 
 import jakarta.validation.Valid;
 
@@ -55,6 +57,13 @@ public class ClientController {
 		
 	}
 	
+	
+	@DeleteMapping(value ="/{id}")
+	public ResponseEntity<ClientDto> delete(@PathVariable Long id) {
+		clientService.delete(id);
+		return ResponseEntity.noContent().build();
+		
+	}
 	
 	
 	
