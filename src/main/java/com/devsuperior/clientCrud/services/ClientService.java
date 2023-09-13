@@ -12,6 +12,8 @@ import com.devsuperior.clientCrud.dtos.ClientDto;
 import com.devsuperior.clientCrud.entities.Client;
 import com.devsuperior.clientCrud.repositories.ClientRepository;
 
+import jakarta.validation.Valid;
+
 @Component
 public class ClientService {
 	
@@ -29,5 +31,12 @@ public class ClientService {
 		Optional<Client> result = clientRepository.findById(id);
 		Client client = result.get();
 		return new ClientDto(client);
+	}
+	
+	@Transactional
+	public ClientDto insert (ClientDto dto) {
+		Client entity = new Client(dto);
+		clientRepository.save(entity);
+		return new ClientDto(entity);
 	}
 }

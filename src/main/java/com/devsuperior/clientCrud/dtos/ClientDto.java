@@ -4,13 +4,26 @@ import java.time.LocalDate;
 
 import com.devsuperior.clientCrud.entities.Client;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
 public class ClientDto {
 	
 	private Long id;
+	@NotBlank(message = " Field required")
 	private String name;
+	@Size(min=11, message="The cpf must be 11 characters, only numbers")
+	@NotBlank(message = " Field required")
 	private String cpf;
+	@Positive(message="The income must be greater than zero")
 	private Double income;
+	@Past(message = "The birthDate must be in the past")
 	private LocalDate birthDate;
+	@PositiveOrZero(message = "The number of children must be postive or zero")
 	private Integer children;
 	
 	public ClientDto(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
