@@ -1,17 +1,28 @@
 package com.devsuperior.clientCrud.entities;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="tb_client")
 public class Client {
-	
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	private String cpf;
 	private Double income;
-	private Double birthDate;
+	private LocalDate birthDate;
 	private Integer children;
 	
-	public Client(Long id, String name, String cpf, Double income, Double birthDate, Integer children) {
+	public Client(Long id, String name, String cpf, Double income, LocalDate birthDate, Integer children) {
 		this.id = id;
 		this.name = name;
 		this.cpf = cpf;
@@ -52,11 +63,11 @@ public class Client {
 		this.income = income;
 	}
 
-	public Double getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Double birthDate) {
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
 
