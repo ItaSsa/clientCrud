@@ -18,7 +18,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.devsuperior.clientCrud.dtos.ClientDto;
 import com.devsuperior.clientCrud.services.ClientService;
-import com.devsuperior.dscommerce.dtos.ProductDto;
 
 import jakarta.validation.Valid;
 

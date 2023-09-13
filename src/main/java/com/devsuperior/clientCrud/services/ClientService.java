@@ -9,9 +9,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.devsuperior.clientCrud.Exceptions.ResourceNotFoundException;
 import com.devsuperior.clientCrud.dtos.ClientDto;
 import com.devsuperior.clientCrud.entities.Client;
 import com.devsuperior.clientCrud.repositories.ClientRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Component
 public class ClientService {
@@ -28,7 +31,7 @@ public class ClientService {
 	@Transactional(readOnly = true)
 	public ClientDto findById(Long id) {
 		Optional<Client> result = clientRepository.findById(id);
-		Client client = result.get();
+		Client client = result.orElseThrow(() -> new ResourceNotFoundException("Id not found"));
 		return new ClientDto(client);
 	}
 	
@@ -42,16 +45,24 @@ public class ClientService {
 	
 	@Transactional
 	public ClientDto update(Long id, ClientDto dto) {
+		try {
 			Client entity = clientRepository.getReferenceById(id);
 			copyDtoToEntity(dto,entity);
 			entity = clientRepository.save(entity);
 			return new ClientDto(entity);
-
+		}catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(" Client not found ");
+		}		
 	}
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public void delete (Long id) {
-		clientRepository.deleteById(id);    
+		
+		if (!clientRepository.existsById(id)) {
+			throw new ResourceNotFoundException("Client not found");
+		}
+		
+		clientRepository.deleteById(id);  
 	}
 	
 	
